@@ -3,6 +3,10 @@ async function editResponse() {
   // change type to number
   body = body.replace(/type="password"/g, 'type="number"');
   $done({ body });
+  $notification.post(
+    "🎉 信用卡 3D 驗證自動填寫修正",
+    "已修正信用卡 3D 驗證自動填寫問題"
+  );
 }
 
 (async () => {

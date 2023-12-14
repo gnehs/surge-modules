@@ -2,7 +2,7 @@
 #!desc=修正信用卡 3D 驗證實無法觸發 iOS 自動填寫功能
 
 [Script]
-[信用卡]3D驗證自動填寫修正 = type=http-request, pattern=^https:\/\/ebauthen\.nccc\.com\.tw\/acsn2_kernel\/2\/browser\/challenge-otp,script-path=https://gnehs.github.io/surge-modules/scripts/nccc-3d.js
+[信用卡]3D驗證自動填寫修正 = type=http-request, pattern=^https:\/\/webauthen\.nccc\.com\.tw\/acsn2_kernel\/2\/browser\/challenge-otp,script-path=https://gnehs.github.io/surge-modules/scripts/nccc-3d.js
 
 [MITM]
-hostname = %APPEND% ebauthen.nccc.com.tw
+hostname = %APPEND% webauthen.nccc.com.tw
