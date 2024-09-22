@@ -1,0 +1,1 @@
+- 部分天氣程式碼修改自 [iRingo](https://github.com/VirgilClyne/iRingo/tree/main)
