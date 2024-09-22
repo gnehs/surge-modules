@@ -83,21 +83,30 @@ function parseWeatherKitURL(url = new URL($request.url)) {
 async function InjectForecastNextHour(body) {
   const urlInfo = parseWeatherKitURL();
   const { latitude, longitude } = urlInfo;
-  let kneadWeatherRainResult = new Promise((resolve, reject) => {
+  let kneadWeatherRainResult = await new Promise((resolve, reject) => {
     console.log(`⚠ 自動填充短時降雨資料 - 正在請求`);
     $httpClient.get(
-      `https://weather-api.pancake.tw/rain-forcast?lat=${latitude}&lon=${longitude}`,
-      function (error, response, data) {
+      {
+        url: `https://weather-api.pancake.tw/rain-forcast?lat=${latitude}&lon=${longitude}`,
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+        },
+      },
+      function (error, response) {
         if (error) {
           $notification.post("WeatherKit", "", "連線錯誤‼️");
+          reject(error);
         } else if (response.status === 200) {
-          resolve(JSON.parse(data));
+          resolve(response.data);
         }
       }
     );
   });
   console.log(`⚠ 自動填充短時降雨資料 - 完成請求`);
-  console.log(kneadWeatherRainResult);
+  console.log(typeof kneadWeatherRainResult);
+  console.log(`->\n${JSON.stringify(kneadWeatherRainResult)}`);
   kneadWeatherRainResult.data = kneadWeatherRainResult.data.sort(
     (a, b) =>
       new Date(a.forcastTime).getTime() - new Date(b.forcastTime).getTime()
