@@ -55,7 +55,7 @@ function parseWeatherKitURL(url = new URL($request.url)) {
       const Builder = new flatbuffers.Builder();
 
       let body = WeatherKit2.decode(ByteBuffer, "all");
-      //console.log(body);
+
       if (url.searchParams.get("dataSets").includes("forecastNextHour")) {
         if (!body?.forecastNextHour && urlInfo.country === "TW") {
           console.log(`⚠ 自動填充短時降雨資料`);
@@ -153,13 +153,7 @@ async function InjectForecastNextHour(body) {
           precipitationIntensity: parseFloat(minuteData.value),
           startTime: new Date(minuteData.forcastTime).getTime() / 1000,
         };
-        let minutes = [
-          { ...minute },
-          { ...minute },
-          { ...minute },
-          { ...minute },
-          { ...minute },
-        ];
+        let minutes = Array(minuteInterval).fill({ ...minute });
         minutes = minutes.map((minute, idx) => {
           // 根據偵測到的分鐘精度來填充時間
           minute.startTime = minute.startTime + idx * minuteInterval * 60;
@@ -172,5 +166,6 @@ async function InjectForecastNextHour(body) {
   };
   console.log(`⚠ 自動填充短時降雨資料 - 完成`);
   body.forecastNextHour = forecastNextHour;
+  console.log(JSON.stringify(forecastNextHour));
   return body;
 }
