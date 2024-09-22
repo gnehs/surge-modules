@@ -172,7 +172,6 @@ export default class ForecastNextHour {
   static Minute(minutes = [], description = "", units = "mmph") {
     const PrecipitationType = this.PrecipitationType(description);
     minutes = minutes.map((minute) => {
-      //minute.precipitationIntensity = Math.round(minute.precipitationIntensity * 1000000) / 1000000; // 六位小數
       minute.condition = this.ConditionType(
         minute.precipitationIntensity,
         PrecipitationType,
@@ -185,7 +184,7 @@ export default class ForecastNextHour {
           units
         );
       if (minute.perceivedPrecipitationIntensity >= 0.001)
-        minute.precipitationType = PrecipitationType;
+        minute.precipitationType = "RAIN";
       else minute.precipitationType = "CLEAR";
       return minute;
     });
