@@ -74,7 +74,8 @@ function parseWeatherKitURL(url = new URL($request.url)) {
       $done($response);
     }
   } catch (e) {
-    console.log("執行時發生錯誤", e);
+    console.log("執行時發生錯誤");
+    console.log(e.toString());
   } finally {
     $done($response);
   }
@@ -105,8 +106,8 @@ async function InjectForecastNextHour(body) {
   // 計算分鐘間隔
   const calculateMinuteInterval = (data) => {
     if (data.length < 2) return 60; // 預設分鐘間隔 60 秒
-    const firstTime = new Date(data[1].forcastTime).getTime();
-    const secondTime = new Date(data[0].forcastTime).getTime();
+    const firstTime = new Date(data[0].forcastTime).getTime();
+    const secondTime = new Date(data[1].forcastTime).getTime();
     return Math.abs((secondTime - firstTime) / 1000 / 60); // 以分鐘為單位
   };
 
