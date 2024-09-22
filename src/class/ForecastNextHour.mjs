@@ -64,15 +64,6 @@ export default class ForecastNextHour {
           HEAVY: [11.33, 51.3],
           STORM: [51.3, Number.MAX_VALUE],
         },
-        /* 新標準不好用
-				"mmph": {
-					"NO": [0, 0.0606],
-					"LIGHT": [0.0606, 0.8989],
-					"MODERATE": [0.8989, 2.87],
-					"HEAVY": [2.87, 12.8638],
-					"STORM": [12.8638, Number.MAX_VALUE],
-				},
-				*/
       },
     },
   };

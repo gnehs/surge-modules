@@ -150,7 +150,7 @@ async function InjectForecastNextHour(body) {
       .map((minuteData) => {
         const minute = {
           perceivedPrecipitationIntensity: 0,
-          precipitationChance: 0,
+          precipitationChance: Math.min(100, minuteData.value / 20),
           precipitationIntensity: parseFloat(minuteData.value),
           startTime:
             new Date(kneadWeatherRainResult.data[0].forcastTime).getTime() /
