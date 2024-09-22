@@ -133,7 +133,10 @@ async function InjectForecastNextHour(body) {
       latitude,
       longitude,
       providerLogo: null,
-      providerName: null,
+      providerName:
+        kneadWeatherRainResult.source === "jma"
+          ? "日本氣象廳"
+          : "國家災害防救科技中心",
       readTime: timeStamp,
       reportedTime: minuteStemp,
       temporarilyUnavailable: false,
