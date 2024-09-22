@@ -35,11 +35,15 @@ jobs:
 
       - name: "🚀 Build the project"
         run: pnpm build
-
+      - name: "Add dist folder"
+        run: |
+          mkdir dist
+          cp -r scripts dist/scripts
+          cp -r modules dist/modules
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./
+          path: ./dist
   # Deployment job
   deploy:
     environment:
