@@ -55,7 +55,7 @@ function parseWeatherKitURL(url = new URL($request.url)) {
       const Builder = new flatbuffers.Builder();
 
       let body = WeatherKit2.decode(ByteBuffer, "all");
-      console.log(body);
+      //console.log(body);
       if (url.searchParams.get("dataSets").includes("forecastNextHour")) {
         if (!body?.forecastNextHour && urlInfo.country === "TW") {
           console.log(`⚠ 自動填充短時降雨資料`);
@@ -96,6 +96,8 @@ async function InjectForecastNextHour(body) {
       }
     );
   });
+  console.log(`⚠ 自動填充短時降雨資料 - 完成請求`);
+  console.log(kneadWeatherRainResult);
   kneadWeatherRainResult.data = kneadWeatherRainResult.data.sort(
     (a, b) =>
       new Date(a.forcastTime).getTime() - new Date(b.forcastTime).getTime()
