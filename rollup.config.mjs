@@ -9,7 +9,6 @@ export default {
   output: [
     {
       file: "scripts/weather-kit.js",
-      format: "cjs",
     },
   ],
   plugins: [json(), commonjs(), nodeResolve(), terser()],
