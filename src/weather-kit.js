@@ -94,12 +94,12 @@ async function InjectForecastNextHour(body) {
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
         },
       },
-      function (error, response) {
+      function (error, response, data) {
         if (error) {
           $notification.post("WeatherKit", "", "連線錯誤‼️");
           reject(error);
         } else if (response.status === 200) {
-          resolve(response.data);
+          resolve(data);
         }
       }
     );
