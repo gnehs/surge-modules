@@ -99,14 +99,12 @@ async function InjectForecastNextHour(body) {
           $notification.post("WeatherKit", "", "連線錯誤‼️");
           reject(error);
         } else if (response.status === 200) {
-          resolve(data);
+          resolve(JSON.parse(data));
         }
       }
     );
   });
   console.log(`⚠ 自動填充短時降雨資料 - 完成請求`);
-  console.log(typeof kneadWeatherRainResult);
-  console.log(`->\n${JSON.stringify(kneadWeatherRainResult)}`);
   kneadWeatherRainResult.data = kneadWeatherRainResult.data.sort(
     (a, b) =>
       new Date(a.forcastTime).getTime() - new Date(b.forcastTime).getTime()
