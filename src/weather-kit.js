@@ -97,7 +97,8 @@ async function InjectForecastNextHour(body) {
     );
   });
   kneadWeatherRainResult.data = kneadWeatherRainResult.data.sort(
-    (a, b) => new Date(a.forcastTime) - new Date(b.forcastTime)
+    (a, b) =>
+      new Date(a.forcastTime).getTime() - new Date(b.forcastTime).getTime()
   );
   console.log(`⚠ 自動填充短時降雨資料 - 開始填充`);
   const timeStamp = Date.now() / 1000;
