@@ -1,6 +1,7 @@
 import * as flatbuffers from "flatbuffers";
 import WeatherKit2 from "./class/WeatherKit2.mjs";
 import { Configs } from "./Weather.json";
+import ForecastNextHour from "./class/ForecastNextHour.mjs";
 function parseWeatherKitURL(url = new URL($request.url)) {
   console.log("☑️ parseWeatherKitURL");
 
@@ -166,8 +167,24 @@ async function InjectForecastNextHour(body) {
       .flat(Infinity),
     summary: [],
   };
+
+  forecastNextHour.minutes.length = Math.min(
+    85,
+    forecastNextHour.minutes.length
+  );
+  forecastNextHour.forecastEnd =
+    minuteStemp + 60 * forecastNextHour.minutes.length;
+  forecastNextHour.minutes = ForecastNextHour.Minute(
+    forecastNextHour.minutes,
+    "",
+    "mmph"
+  );
+  forecastNextHour.summary = ForecastNextHour.Summary(forecastNextHour.minutes);
+  forecastNextHour.condition = ForecastNextHour.Condition(
+    forecastNextHour.minutes
+  );
+
   console.log(`⚠ 自動填充短時降雨資料 - 完成`);
-  body.forecastNextHour = forecastNextHour;
   console.log(JSON.stringify(forecastNextHour));
   return body;
 }
