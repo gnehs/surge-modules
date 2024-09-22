@@ -1,5 +1,6 @@
 import * as flatbuffers from "flatbuffers";
 import WeatherKit2 from "./class/WeatherKit2.mjs";
+import { Configs } from "./Weather.json";
 try {
   const url = new URL($request.url);
   console.log(`⚠ url: ${url.toJSON()}`, "");
@@ -16,14 +17,10 @@ try {
     `⚠ METHOD: ${METHOD}, HOST: ${HOST}, PATH: ${PATH}, PATHs: ${PATHs}, FORMAT: ${FORMAT}`
   );
   if (FORMAT === "application/json" || FORMAT === "text/json") {
-    body = JSON.parse($response.body ?? "{}");
-    console.log(body);
-    $done({ body: JSON.stringify(body) });
-
-    // 路徑判斷
-    // if (PATH.startsWith("/api/v1/availability/")) {
-    //   body = Configs?.Availability?.v2;
-    // }
+    if (PATH.startsWith("/api/v1/availability/")) {
+      body = JSON.parse($response.body ?? "{}");
+      $done({ body: JSON.stringify(Configs?.Availability?.v2 ?? body) });
+    }
   } else if (FORMAT === "application/vnd.apple.flatbuffer") {
     const ByteBuffer = new flatbuffers.ByteBuffer($response.body);
     const Builder = new flatbuffers.Builder();
